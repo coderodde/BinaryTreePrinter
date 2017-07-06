@@ -103,6 +103,23 @@ public final class TextSprite {
         return height;
     }
     
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder((width + 1) * height - 1);
+        String separator = "";
+        
+        for (int y = 0; y < height; ++y) {
+            sb.append(separator);
+            separator = "\n";
+            
+            for (int x = 0; x < width; ++x) {
+                sb.append(getChar(x, y));
+            }
+        }
+        
+        return sb.toString();
+    }
+    
     private int checkWidth(int width) {
         if (width < MINIMUM_SPRITE_WIDTH) {
             throw new IllegalArgumentException(

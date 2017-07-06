@@ -2,11 +2,11 @@ package net.coderodde.util.tree.demo;
 
 import net.coderodde.util.tree.BinaryTreeNode;
 
-final class SimpleStringBinaryTreeNode implements BinaryTreeNode<String> {
+public final class SimpleStringBinaryTreeNode implements BinaryTreeNode<String> {
 
-    String value;
-    SimpleStringBinaryTreeNode leftChild;
-    SimpleStringBinaryTreeNode rightChild;
+    public String value;
+    public SimpleStringBinaryTreeNode leftChild;
+    public SimpleStringBinaryTreeNode rightChild;
     
     @Override
     public String getValue() {

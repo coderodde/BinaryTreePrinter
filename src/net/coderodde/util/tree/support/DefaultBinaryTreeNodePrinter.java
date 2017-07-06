@@ -3,6 +3,7 @@ package net.coderodde.util.tree.support;
 import net.coderodde.util.tree.BinaryTreeNode;
 import net.coderodde.util.tree.BinaryTreeNodePrinter;
 import net.coderodde.util.tree.TextSprite;
+import net.coderodde.util.tree.demo.SimpleStringBinaryTreeNode;
 
 public final class DefaultBinaryTreeNodePrinter<T> 
         implements BinaryTreeNodePrinter<T> {
@@ -82,16 +83,37 @@ public final class DefaultBinaryTreeNodePrinter<T>
      */
     private char bottomRightCornerCharacter = DEFAULT_CORNER_CHARACTER;
     
+    /**
+     * The character used to print the top border.
+     */
+    private char topBorderCharacter = DEFAULT_HORIZONTAL_BORDER_CHARACTER;
+    
+    /**
+     * The character used to print the right border.
+     */
+    private char rightBorderCharacter = DEFAULT_VERTICAL_BORDER_CHARACTER;
+    
+    /**
+     * The character used to print the bottom border.
+     */
+    private char bottomBorderCharacter = DEFAULT_HORIZONTAL_BORDER_CHARACTER;
+    
+    /**
+     * The character used to print the left border.
+     */
+    private char leftBorderCharacter = DEFAULT_VERTICAL_BORDER_CHARACTER;
+    
     @Override
     public TextSprite print(BinaryTreeNode<T> node) {
         String value = node.getValue().toString();
-        String[] lines = value.split(value);
+        String[] lines = value.split("\n");
         int maximumLineLength = getMaximumLineLength(lines);
         int width = 2 + paddingLeft + paddingRight + maximumLineLength;
         int height = 2 + paddingTop + paddingBottom + lines.length;
         TextSprite textSprite = new TextSprite(width, height);
-        drawCorners(textSprite);
-        drawBorders(textSprite);
+        printCorners(textSprite);
+        printBorders(textSprite);
+        printLines(textSprite, lines);
         setEmptyTextSpriteCellsToSpace(textSprite);
         return textSprite;
     }
@@ -128,11 +150,27 @@ public final class DefaultBinaryTreeNodePrinter<T>
         return bottomRightCornerCharacter;
     }
     
+    public char getTopBorderCharacter() {
+        return topBorderCharacter;
+    }
+    
+    public char getRightBorderCharacter() {
+        return rightBorderCharacter;
+    }
+    
+    public char getBottomBorderCharacter() {
+        return bottomBorderCharacter;
+    }
+    
+    public char getLeftBorderCharacter() {
+        return leftBorderCharacter;
+    }
+    
     public void setTopPadding(int paddingTop) {
         this.paddingTop = checkPaddingTop(paddingTop);
     }
     
-    public void setRightPadding(int paddintRight) {
+    public void setRightPadding(int paddingRight) {
         this.paddingRight = checkPaddingRight(paddingRight);
     }
     
@@ -158,6 +196,22 @@ public final class DefaultBinaryTreeNodePrinter<T>
     
     public void setBottomRightCornerCharacter(char c) {
         bottomRightCornerCharacter = c;
+    }
+    
+    public void setTopBorderCharacter(char c) {
+        topBorderCharacter = c;
+    }
+    
+    public void setRightBorderCharacter(char c) {
+        rightBorderCharacter = c;
+    }
+    
+    public void setBottomBorderCharacter(char c) {
+        bottomBorderCharacter = c;
+    }
+    
+    public void setLeftBorderCharacter(char c) {
+        leftBorderCharacter = c;
     }
     
     private int checkPadding(int padding, String errorMessage) {
@@ -208,7 +262,7 @@ public final class DefaultBinaryTreeNodePrinter<T>
         }
     }
     
-    private void drawCorners(TextSprite textSprite) {
+    private void printCorners(TextSprite textSprite) {
         int width = textSprite.getWidth();
         int height = textSprite.getHeight();
         textSprite.setChar(0, 0, topLeftCornerCharacter);
@@ -217,7 +271,31 @@ public final class DefaultBinaryTreeNodePrinter<T>
         textSprite.setChar(width - 1, height - 1, bottomRightCornerCharacter);
     }
     
-    private void drawBorders(TextSprite textSprite) {
+    private void printBorders(TextSprite textSprite) {
+        int width = textSprite.getWidth();
+        int height = textSprite.getHeight();
         
+        for (int x = 1; x < width - 1; ++x) {
+            textSprite.setChar(x, 0, topBorderCharacter);
+            textSprite.setChar(x, height - 1, bottomBorderCharacter);
+        }
+        
+        for (int y = 1; y < height - 1; ++y) {
+            textSprite.setChar(0, y, leftBorderCharacter);
+            textSprite.setChar(width - 1, y, rightBorderCharacter);
+        }
+    }
+    
+    private void printLines(TextSprite textSprite, String[] lines) {
+        int startY = 1 + paddingTop;
+        int startX = 1 + paddingLeft;
+        
+        for (int y = 0; y < lines.length; ++y) {
+            char[] chars = lines[y].toCharArray();
+            
+            for (int x = 0; x < chars.length; ++x) {
+                textSprite.setChar(startX + x, startY + y, chars[x]);
+            }
+        }
     }
 }
