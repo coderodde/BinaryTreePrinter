@@ -1,26 +1,12 @@
 package net.coderodde.util.tree;
 
+/**
+ * This class implements the textual sprite used for printing the binary trees.
+ * 
+ * @author Rodion "rodde" Efremov
+ * @version 1.6 (Jul 6, 2017)
+ */
 public final class TextSprite {
-    
-    /**
-     * The character used to print corners.
-     */
-    private static final char CORNER_CHAR = '+';
-    
-    /**
-     * The character used to print horizontal borders.
-     */
-    private static final char HORIZONTAL_BORDER_CHAR = '-';
-    
-    /**
-     * The character used to print vertical borders.
-     */
-    private static final char VERTICAL_BORDER_CHAR = '|';
-    
-    /**
-     * The character used to print the arrow tips.
-     */
-    private static final char ARROW_CHAR = 'V';
     
     /**
      * The minimum width of a sprite in characters.

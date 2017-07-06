@@ -5,6 +5,13 @@ import net.coderodde.util.tree.BinaryTreeNodePrinter;
 import net.coderodde.util.tree.BinaryTreePrinter;
 import net.coderodde.util.tree.TextSprite;
 
+/**
+ * Implements a default binary tree printer.
+ * 
+ * @author Rodion "rodde" Efremov
+ * @version 1.6 (Jul 6, 2017)
+ * @param <T> the type of the data contained in the binary tree nodes.
+ */
 public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
 
     /**
