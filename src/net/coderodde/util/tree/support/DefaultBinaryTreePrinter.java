@@ -173,7 +173,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         
         subtreeDescriptor.rootNodeOffset = leftChildTextSprite.getWidth() 
                                          + leftPartOffset - a;
-        subtreeDescriptor.rootNodeOffset = nodeTextSprite.getWidth();
+        subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
         subtreeDescriptor.textSprite = subtreeTextSprite;
         return subtreeDescriptor;
     }
