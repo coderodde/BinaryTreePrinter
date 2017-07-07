@@ -40,7 +40,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
     @Override
     public String print(BinaryTreeNode<T> root, 
                         BinaryTreeNodePrinter<T> nodePrinter) {
-        return printImpl(root, nodePrinter).toString();
+        return printImpl(root, nodePrinter).textSprite.toString();
     }
 
     public int getSiblingSpace() {
@@ -59,10 +59,22 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         this.arrowTipCharacter = arrowTipCharacter;
     }
     
-    private TextSprite printImpl(BinaryTreeNode<T> node, 
-                                 BinaryTreeNodePrinter<T> nodePrinter) {
+    private static final class SubtreeDescriptor {
+        
+        TextSprite textSprite;
+        int rootNodeOffset;
+        int rootNodeWidth;
+    }
+    
+    private SubtreeDescriptor printImpl(BinaryTreeNode<T> node, 
+                                        BinaryTreeNodePrinter<T> nodePrinter) {
         if (node.getLeftChild() == null && node.getRightChild() == null) {
-            return nodePrinter.print(node);
+            TextSprite leafNodeTextSprite = nodePrinter.print(node);
+            SubtreeDescriptor subtreeDescriptor = new SubtreeDescriptor();
+            subtreeDescriptor.rootNodeOffset = 0;
+            subtreeDescriptor.rootNodeWidth = leafNodeTextSprite.getWidth();
+            subtreeDescriptor.textSprite = leafNodeTextSprite;
+            return subtreeDescriptor;
         }
         
         if (node.getLeftChild() != null && node.getRightChild() != null) {
@@ -76,41 +88,53 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         return printWithRightChildImpl(node, nodePrinter);
     }
     
-    private TextSprite printWithTwoChildrenImpl(
+    private SubtreeDescriptor printWithTwoChildrenImpl(
             BinaryTreeNode<T> node,
             BinaryTreeNodePrinter<T> nodePrinter) {
-        TextSprite leftChildTextSprite = printImpl(node.getLeftChild(),
-                                                   nodePrinter);
+        SubtreeDescriptor subtreeDescriptor = new SubtreeDescriptor();
+        SubtreeDescriptor leftChildDescriptor = printImpl(node.getLeftChild(),
+                                                          nodePrinter);
         
-        TextSprite rightChildTextSprite = printImpl(node.getRightChild(),
-                                                    nodePrinter);
+        SubtreeDescriptor rightChildDescriptor = printImpl(node.getRightChild(),
+                                                           nodePrinter);
         
         TextSprite nodeTextSprite = nodePrinter.print(node);
-        
+        TextSprite subtreeTextSprite = new TextSprite(0, 0);
+        subtreeDescriptor.rootNodeOffset = 0;
+        subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
+        subtreeDescriptor.textSprite = subtreeTextSprite;
         // Combine them:
         return null;
     }
     
-    private TextSprite printWithLeftChildImpl(
+    private SubtreeDescriptor printWithLeftChildImpl(
             BinaryTreeNode<T> node,
             BinaryTreeNodePrinter<T> nodePrinter) {
-        TextSprite leftChildTextSprite = printImpl(node.getLeftChild(),
-                                                   nodePrinter);
+        SubtreeDescriptor subtreeDescriptor = new SubtreeDescriptor();
+        SubtreeDescriptor leftChildDescriptor = printImpl(node.getLeftChild(),
+                                                          nodePrinter);
         
         TextSprite nodeTextSprite = nodePrinter.print(node);
-        
-        return null;
+        TextSprite subtreeTextSprite = new TextSprite(0, 0);
+        subtreeDescriptor.rootNodeOffset = 0;
+        subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
+        subtreeDescriptor.textSprite = subtreeTextSprite;
+        return subtreeDescriptor;
     }
     
-    private TextSprite printWithRightChildImpl(
+    private SubtreeDescriptor printWithRightChildImpl(
             BinaryTreeNode<T> node,
             BinaryTreeNodePrinter<T> nodePrinter) {
-        TextSprite rightChildTextSprite = printImpl(node.getRightChild(),
-                                                    nodePrinter);
+        SubtreeDescriptor subtreeDescriptor = new SubtreeDescriptor();
+        SubtreeDescriptor rightChildDescriptor = printImpl(node.getRightChild(),
+                                                           nodePrinter);
         
         TextSprite nodeTextSprite = nodePrinter.print(node);
-        
-        return null;
+        TextSprite subtreeTextSprite = new TextSprite(0, 0);
+        subtreeDescriptor.rootNodeOffset = 0;
+        subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
+        subtreeDescriptor.textSprite = subtreeTextSprite;
+        return subtreeDescriptor;
     }
 
     private int checkSiblingSpace(int siblingSpace) {
