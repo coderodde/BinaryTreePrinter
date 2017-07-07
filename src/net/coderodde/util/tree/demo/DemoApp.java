@@ -15,10 +15,13 @@ public final class DemoApp {
         
         SimpleStringBinaryTreeNode node = new SimpleStringBinaryTreeNode();
         SimpleStringBinaryTreeNode nodeRight = new SimpleStringBinaryTreeNode();
+        SimpleStringBinaryTreeNode nodeRightLeft = new SimpleStringBinaryTreeNode();
         
         node.value = "Oh\nyeah!";
         nodeRight.value = "Hurraa!";
+        nodeRightLeft.value = "How's it going?";
         node.rightChild = nodeRight;
+        nodeRight.leftChild = nodeRightLeft;
         
         System.out.println(printer.print(node, nodePrinter));
         
