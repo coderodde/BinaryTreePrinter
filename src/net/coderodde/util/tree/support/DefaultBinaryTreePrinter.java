@@ -29,12 +29,12 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
     /**
      * The minimum number of spaces between two siblings.
      */
-    private int siblingSpace;
+    private int siblingSpace = DEFAULT_MINIMUM_SIBLING_SPACE;
             
     /**
      * The arrow tip character.
      */
-    private char arrowTipCharacter;
+    private char arrowTipCharacter = DEFAULT_ARROW_TIP_CHARACTER;
     
     
     @Override
@@ -127,8 +127,8 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         int rightPartOffset = 0;
         
         if (rightChildDescriptor.rootNodeOffset +
-                rightChildDescriptor.rootNodeWidth < aRight + 2) {
-            rightPartOffset = aRight + 2 - rightChildDescriptor.rootNodeOffset
+                rightChildDescriptor.rootNodeWidth < aRight + 3) {
+            rightPartOffset = aRight + 3 - rightChildDescriptor.rootNodeOffset
                                          - rightChildDescriptor.rootNodeWidth;
         }
         
@@ -303,6 +303,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         
         // Number of spaces on the right side of the sibling separator.
         int a = (nodeTextSprite.getWidth() - siblingSpace) / 2;
+        
         int rightPartOffset = 0;
         
         if (rightChildDescriptor.rootNodeOffset + 

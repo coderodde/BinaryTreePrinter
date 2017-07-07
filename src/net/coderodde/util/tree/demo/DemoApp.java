@@ -16,15 +16,24 @@ public final class DemoApp {
         SimpleStringBinaryTreeNode node = new SimpleStringBinaryTreeNode();
         SimpleStringBinaryTreeNode nodeRight = new SimpleStringBinaryTreeNode();
         SimpleStringBinaryTreeNode nodeRightLeft = new SimpleStringBinaryTreeNode();
-        SimpleStringBinaryTreeNode nodeLeft = null;
+        SimpleStringBinaryTreeNode nodeLeft = new SimpleStringBinaryTreeNode();
+        SimpleStringBinaryTreeNode nodeLeftRight = new SimpleStringBinaryTreeNode();
         
         node.value = "Oh\nyeah!";
         nodeRight.value = "Hurraa!";
         nodeRightLeft.value = "How's it going?";
-        node.rightChild = nodeRight;
-        nodeRight.leftChild = nodeRightLeft;
+        nodeLeft.value = "Comm'on ! :)";
+//        nodeLeftRight.value = "Joulu\npukkeaahhaki";
+        nodeLeftRight.value = "abcdefGH";
+//        
+//        node.rightChild = nodeRight;
+//        nodeRight.leftChild = nodeRightLeft;
+//        node.leftChild = nodeLeft;
+//        nodeLeft.rightChild = nodeLeftRight;
+        nodeLeft.rightChild = nodeLeftRight;
         
-        System.out.println(printer.print(node, nodePrinter));
+        System.out.println(printer.print(nodeLeft, nodePrinter));
+//        System.out.println(printer.print(node, nodePrinter));
         
 //        printer.setTopLeftCornerCharacter('1');
 //        printer.setTopRightCornerCharacter('2');
