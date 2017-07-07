@@ -40,7 +40,9 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
     @Override
     public String print(BinaryTreeNode<T> root, 
                         BinaryTreeNodePrinter<T> nodePrinter) {
-        return printImpl(root, nodePrinter).textSprite.toString();
+        TextSprite textSprite = printImpl(root, nodePrinter).textSprite;
+        Utils.setEmptyTextSpriteCellsToSpace(textSprite);
+        return textSprite.toString();
     }
 
     public int getSiblingSpace() {
@@ -130,7 +132,40 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
                                                            nodePrinter);
         
         TextSprite nodeTextSprite = nodePrinter.print(node);
-        TextSprite subtreeTextSprite = new TextSprite(0, 0);
+        TextSprite rightChildTextSprite = rightChildDescriptor.textSprite;
+        
+        // The height of the resulting text sprite.
+        int subtreeTextSpriteHeight = 1 + nodeTextSprite.getHeight()
+                                        + rightChildTextSprite.getHeight();
+        
+        // Number of spaces on the right side of the sibling separator.
+        int a = (nodeTextSprite.getWidth() - siblingSpace) / 2;
+        int rightSubtreeOffset = nodeTextSprite.getWidth() - a;
+        
+        // The width of the resulting text sprite.
+        int subtreeTextSpriteWidth = rightSubtreeOffset + 
+                                     rightChildDescriptor.textSprite.getWidth();
+        
+        TextSprite subtreeTextSprite = new TextSprite(subtreeTextSpriteWidth, 
+                                                      subtreeTextSpriteHeight);
+        subtreeTextSprite.apply(nodeTextSprite, 0, 0);
+        subtreeTextSprite.apply(rightChildDescriptor.textSprite,
+                                rightSubtreeOffset,
+                                1 + nodeTextSprite.getHeight());
+        
+        int arrowLength = rightChildDescriptor.rootNodeOffset - a;
+               
+        int arrowStartX = nodeTextSprite.getWidth();
+        int arrowY = nodeTextSprite.getHeight() - 2;
+        
+        for (int x = 0; x < arrowLength; ++x) {
+            subtreeTextSprite.setChar(arrowStartX + x, arrowY, '-');
+        }
+        
+        subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY, '+');
+        subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY + 1, '|');
+        subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY + 2, 'V');
+        
         subtreeDescriptor.rootNodeOffset = 0;
         subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
         subtreeDescriptor.textSprite = subtreeTextSprite;

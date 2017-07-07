@@ -1,5 +1,7 @@
 package net.coderodde.util.tree;
 
+import java.util.Objects;
+
 /**
  * This class implements the textual sprite used for printing the binary trees.
  * 
@@ -87,6 +89,45 @@ public final class TextSprite {
      */
     public int getHeight() {
         return height;
+    }
+    
+    /**
+     * Applies the input text sprite on top of a rectangle of this text sprite.
+     * 
+     * @param textSprite the text sprite to apply.
+     * @param xOffset    the horizontal offset from the left border.
+     * @param yOffset    the vertical offset from the top border.
+     */
+    public void apply(TextSprite textSprite, int xOffset, int yOffset) {
+        Objects.requireNonNull(textSprite, "The input TextSprite is null!");
+        
+        if (xOffset < 0) {
+            throw new IndexOutOfBoundsException("xOffset (" + xOffset + ") " +
+                    "may not be negative!");
+        }
+        
+        if (yOffset < 0) {
+            throw new IndexOutOfBoundsException("yOffset (" + yOffset + ") " +
+                    "may not be negative!");
+        }
+            
+        if (xOffset + textSprite.getWidth() > getWidth()) {
+            throw new IndexOutOfBoundsException("xOffset (" + xOffset + ") " +
+                    "is too large! Must be at most " +
+                    (getWidth() - textSprite.getWidth()) + ".");
+        }
+        
+        if (yOffset + textSprite.getHeight() > getHeight()) {
+            throw new IndexOutOfBoundsException("yOffset (" + yOffset + ") " +
+                    "is too large! Must be at most " +
+                    (getHeight() - textSprite.getHeight()) + ".");
+        }
+        
+        for (int y = 0; y < textSprite.getHeight(); ++y) {
+            for (int x = 0; x < textSprite.getWidth(); ++x) {
+                setChar(xOffset + x, yOffset + y, textSprite.getChar(x, y));
+            }
+        }
     }
     
     @Override

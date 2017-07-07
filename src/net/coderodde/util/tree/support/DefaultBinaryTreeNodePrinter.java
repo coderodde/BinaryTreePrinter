@@ -3,7 +3,6 @@ package net.coderodde.util.tree.support;
 import net.coderodde.util.tree.BinaryTreeNode;
 import net.coderodde.util.tree.BinaryTreeNodePrinter;
 import net.coderodde.util.tree.TextSprite;
-import net.coderodde.util.tree.demo.SimpleStringBinaryTreeNode;
 
 /**
  * This class implements a default binary tree node printer.
@@ -121,7 +120,7 @@ public final class DefaultBinaryTreeNodePrinter<T>
         printCorners(textSprite);
         printBorders(textSprite);
         printLines(textSprite, lines);
-        setEmptyTextSpriteCellsToSpace(textSprite);
+        Utils.setEmptyTextSpriteCellsToSpace(textSprite);
         return textSprite;
     }
     
@@ -255,18 +254,6 @@ public final class DefaultBinaryTreeNodePrinter<T>
         }
         
         return maximumLineLength;
-    }
-    
-    private void setEmptyTextSpriteCellsToSpace(TextSprite textSprite) {
-        for (int y = 0; y < textSprite.getHeight(); ++y) {
-            for (int x = 0; x < textSprite.getWidth(); ++x) {
-                char c = textSprite.getChar(x, y);
-                
-                if (c == '\u0000') {
-                    textSprite.setChar(x, y, ' ');
-                }
-            }
-        }
     }
     
     private void printCorners(TextSprite textSprite) {
