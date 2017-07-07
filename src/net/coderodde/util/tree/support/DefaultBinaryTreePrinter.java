@@ -218,9 +218,9 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
                                 1 + nodeTextSprite.getHeight());
         
         int arrowLength = Math.max(1, 
+                                   rightPartOffset + 
                                    rightChildDescriptor.rootNodeOffset +
-                                   rightChildDescriptor.rootNodeWidth / 2 
-                                   - a - 1);
+                                   rightChildDescriptor.rootNodeWidth / 2 - a);
         
         int arrowStartX = nodeTextSprite.getWidth();
         int arrowY = nodeTextSprite.getHeight() - 2;

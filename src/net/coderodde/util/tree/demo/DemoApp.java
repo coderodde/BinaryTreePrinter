@@ -16,6 +16,7 @@ public final class DemoApp {
         SimpleStringBinaryTreeNode node = new SimpleStringBinaryTreeNode();
         SimpleStringBinaryTreeNode nodeRight = new SimpleStringBinaryTreeNode();
         SimpleStringBinaryTreeNode nodeRightLeft = new SimpleStringBinaryTreeNode();
+        SimpleStringBinaryTreeNode nodeLeft = null;
         
         node.value = "Oh\nyeah!";
         nodeRight.value = "Hurraa!";
