@@ -124,7 +124,6 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
                                         + leftChildTextSprite.getHeight();
         
         int a = (nodeTextSprite.getWidth() - siblingSpace) / 2;
-        a = nodeTextSprite.getWidth() - a - siblingSpace;
         
         int b = leftChildDescriptor.textSprite.getWidth() 
                 - leftChildDescriptor.rootNodeOffset
@@ -132,7 +131,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         
         int leftPartOffset = 0;
         
-        if (b + leftChildDescriptor.rootNodeWidth < a + 2) {
+        if (a + 2 > b  + leftChildDescriptor.rootNodeWidth) {
             leftPartOffset = a + 2 - b - leftChildDescriptor.rootNodeWidth;
         }
         
@@ -154,9 +153,11 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
                                 0, 
                                 nodeTextSprite.getHeight() + 1);
         
-        int arrowLength = Math.max(1, b +
-                                   leftChildDescriptor.rootNodeWidth / 2
-                                   - a - 1);
+        int arrowLength = Math.max(1, leftChildTextSprite.getWidth() + 
+                                      leftPartOffset 
+                                      - a 
+                                      - leftChildDescriptor.rootNodeOffset 
+                                      - leftChildDescriptor.rootNodeWidth / 2);
         
         int arrowStartX = leftChildDescriptor.textSprite.getWidth() 
                             + leftPartOffset - a;
@@ -169,7 +170,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         
         subtreeTextSprite.setChar(arrowStartX - arrowLength, arrowY, '+');
         subtreeTextSprite.setChar(arrowStartX - arrowLength, arrowY + 1, '|');
-        subtreeTextSprite.setChar(arrowStartX - arrowLength, arrowY + 2, 'V');
+        subtreeTextSprite.setChar(arrowStartX - arrowLength, arrowY + 2, '|');
         
         subtreeDescriptor.rootNodeOffset = leftChildTextSprite.getWidth() 
                                          + leftPartOffset - a;
@@ -230,7 +231,7 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         
         subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY, '+');
         subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY + 1, '|');
-        subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY + 2, 'V');
+        subtreeTextSprite.setChar(arrowStartX + arrowLength, arrowY + 2, '|');
         
         subtreeDescriptor.rootNodeOffset = 0;
         subtreeDescriptor.rootNodeWidth = nodeTextSprite.getWidth();
