@@ -9,5 +9,11 @@ package net.coderodde.util.tree;
  */
 public interface BinaryTreeNodePrinter<T> {
 
+    /**
+     * Returns the text sprite representing only the input node.
+     * 
+     * @param node the node to convert into a text sprite.
+     * @return the text sprite.
+     */
     public TextSprite print(BinaryTreeNode<T> node);
 }

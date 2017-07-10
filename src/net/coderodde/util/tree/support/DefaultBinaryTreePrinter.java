@@ -146,10 +146,6 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         TextSprite subtreeTextSprite = new TextSprite(subtreeTextSpriteWidth, 
                                                       subtreeTextSpriteHeight);
         
-        subtreeTextSprite.apply(nodeTextSprite, 
-                                leftChildTextSprite.getWidth() + 
-                                        leftPartOffset - aLeft, 0);
-        
         subtreeTextSprite.apply(leftChildTextSprite,
                                 0,
                                 nodeTextSprite.getHeight() + 1);
@@ -173,8 +169,21 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
                                 rightChildDescriptor.rootNodeWidth / 2 - 
                                         aRight);
         
+        int totalArrowLength = leftArrowLength + rightArrowLength;
+        int nodeSpriteShift = totalArrowLength / 2 - leftArrowLength;
+        
+        subtreeTextSprite.apply(nodeTextSprite, 
+                                nodeSpriteShift + 
+                                        leftChildTextSprite.getWidth() + 
+                                        leftPartOffset - aLeft, 
+                                0);
+        
+        rightArrowLength = totalArrowLength / 2;
+        leftArrowLength = totalArrowLength - rightArrowLength;
+        
         int arrowStartX = leftChildTextSprite.getWidth() + leftPartOffset 
-                                                         - aLeft;
+                                                         - aLeft
+                                                         + nodeSpriteShift;
         int arrowY = nodeTextSprite.getHeight() - 2;
         
         for (int x = 0; x < leftArrowLength; ++x) {
@@ -196,7 +205,8 @@ public final class DefaultBinaryTreePrinter<T> implements BinaryTreePrinter<T> {
         arrowStartX = leftChildTextSprite.getWidth()
                             + leftPartOffset 
                             - aLeft
-                            + nodeTextSprite.getWidth();
+                            + nodeTextSprite.getWidth()
+                            + nodeSpriteShift;
         
         for (int x = 0; x < rightArrowLength; ++x) {
             subtreeTextSprite.setChar(arrowStartX + x, arrowY, '-');
